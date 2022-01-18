@@ -13,11 +13,11 @@
   <body>
     
     <nav id="navbar">
-      <h1 ><a class="title" href="<?php echo $_SERVER['PHP_SELF'] ?>" >Programming Hub</a></h1>
+      <h1 ><a class="title" href="index.php" >Programming Hub</a></h1>
       <ul>
-        <li><a class="nav-element" href="<?php echo $_SERVER['PHP_SELF'] ?>" >Home</a></li>
-        <li>Blog</li>
-        <li>Contact</li>
+        <li><a class="nav-element" href="index.php" >Home</a></li>
+        <li><a class="nav-element"  href="blog.php" >Blog</a></li>
+        <li><a class="nav-element"  href="contact.php" >Contact</a></li>
       </ul>
     </nav>
       
@@ -59,19 +59,8 @@
 </footer>
   </body>
   
-<script>
-window.onscroll = function() {myFunction()};
+<script src="js/index.js">
 
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
 </script>
 
 </html>

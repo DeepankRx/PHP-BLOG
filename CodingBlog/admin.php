@@ -11,15 +11,15 @@ function console_log($output, $with_script_tags = true)
   echo $js_code;
 }
 
-$servername = "sturdy-torch-338618:us-central1:deepank";
-$username = "root";
-$password = "";
-$database = "phub";
+// $servername = "sturdy-torch-338618:us-central1:deepank";
+// $username = "root";
+// $password = "";
+// $database = "phub";
 
-// $servername = "sql6.freemysqlhosting.net:3306";
-// $username = "sql6466492";
-// $password = "DPtlr48aTG";
-// $database = "sql6466492";
+$servername = "sql6.freemysqlhosting.net:3306";
+$username = "sql6466492";
+$password = "DPtlr48aTG";
+$database = "sql6466492";
 
 //connecting to database
 $conn = mysqli_connect($servername, $username, $password, $database);

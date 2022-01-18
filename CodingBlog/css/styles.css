@@ -248,15 +248,14 @@ a.nav-element {
     margin-left: 20px;
     font-size: 18px;
     font-weight: 400;
-    
+
 }
 
 .readMore {
     display: none;
 }
 
-.read-more-btn
-{
+.read-more-btn {
     display: inline-block;
     margin-top: 20px;
     margin-left: 20px;
@@ -270,7 +269,40 @@ a.nav-element {
     text-decoration: none;
 }
 
-.blogs
-{
+.blogs {
     position: absolute;
+}
+
+.form {
+    height: auto;
+    background-color: #EDEEF7;
+    margin-top: 100px;
+    padding: 30px;
+    text-align: left ;
+    width:600px;
+    float:right;
+}
+
+
+.description-input-2,.description-input-1 {
+   height: 50px;
+   width:300px;
+    margin:30px;
+    margin-left:100px;
+}
+
+.description-input-1 
+{
+    margin-left:160px;
+}
+
+.description-input-2
+{
+    height: 100px;
+}
+
+label
+
+{
+    font-size:20px;
 }

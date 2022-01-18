@@ -13,13 +13,12 @@ function console_log($output, $with_script_tags = true)
 
 //connecting parameters
 // $servername = "localhost:4306";
-// $username = "root";
-// $password = "";
-// $database = "phub";
-$servername = "sql6.freemysqlhosting.net:3306";
-$username = "sql6466492";
-$password = "DPtlr48aTG";
-$database = "sql6466492";
+$username = "root";
+$password = "";
+$database = "phub";
+$servername = "34.70.68.111";
+
+
 
 //connecting to database
 $conn = mysqli_connect($servername, $username, $password, $database);

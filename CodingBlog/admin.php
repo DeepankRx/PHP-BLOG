@@ -11,7 +11,7 @@ function console_log($output, $with_script_tags = true)
   echo $js_code;
 }
 
-$servername = "34.70.68.111";
+$servername = "sturdy-torch-338618:us-central1:deepank";
 $username = "root";
 $password = "";
 $database = "phub";

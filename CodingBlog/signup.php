@@ -24,7 +24,7 @@ if (!$conn) {
     console_log("Connection Successful \n");
 }
 
-$myTable = "CREATE TABLE `users` (`sno` INT(5) NOT NULL AUTO_INCREMENT, `date` DATE,`Username` VARCHAR(50) NOT NULL,`Password` VARCHAR(100) NOT NULL, `Name` VARCHAR(100) NOT NULL,`PhoneNumber` INT(12) NOT NULL ,`Email` VARCHAR(100) NOT NULL,`isAdmin` CHAR(5),PRIMARY KEY (`sno`))";
+$myTable = "CREATE TABLE `users` (`sno` INT(5) NOT NULL AUTO_INCREMENT, `date` DATE,`Username` VARCHAR(50) NOT NULL,`Password` VARCHAR(100) NOT NULL, `Name` VARCHAR(100) NOT NULL,`PhoneNumber` BIGINT NOT NULL ,`Email` VARCHAR(100) NOT NULL,`isAdmin` CHAR(5),UNIQUE (Username),UNIQUE (Email),PRIMARY KEY (`sno`))";
 
 $resultOfTable  = mysqli_query($conn, $myTable);
 if (!$resultOfTable) {
@@ -41,7 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $insertingData = "INSERT INTO `users` ( `date`,`Name`, `Email`,`PhoneNumber`,`Username` ,`Password`,`isAdmin` ) VALUES (SYSDATE(), '$Name','$Email','$PhoneNumber','$Username','$Password','false')";
     $insert = mysqli_query($conn, $insertingData);
     if (!$insert) {
-        console_log("Data Insertion Failed " . mysqli_error($conn));
+       if(mysqli_errno($conn)==1062){
+        echo "<script>alert('Username or Email already exists');</script>";
+       }
+       else{
+        echo "<script>alert('Error Occured');</script>";
+       }
     } else {
         console_log("Data Insertion Successful ");
     }
@@ -64,16 +69,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <nav id="navbar">
-        <h1><a class="title" href="index.php">Programming Hub</a></h1>
-        <ul>
-            <li><a class="nav-element" href="index.php">Home</a></li>
-            <li><a class="nav-element" href="blog.php">Blog</a></li>
-            <li><a class="nav-element" href="contact.php">Contact</a></li>
-            <li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
-            <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>
-        </ul>
-    </nav>
+<nav id="navbar">
+    <h1><a class="title" href="index.php">Programming Hub</a></h1>
+    <ul>
+      <li><a class="nav-element" href="index.php">Home</a></li>
+      <li><a class="nav-element" href="blog.php">Blog</a></li>
+      <li><a class="nav-element" href="contact.php">Contact</a></li>
+      <?php 
+      if(!isset($_SESSION["Username"])){
+  echo   '<li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
+   <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>';
+      }
+      else
+      {
+        echo   '<li><a class="nav-element" href="logout.php"><button class="login-btn">Log Out</button></a></li>';
+        echo
+        '<li><a class="nav-element" href="profile.php"><button class="login-btn">'.$_SESSION['Username'].'</button></a></li>';
+      }
+      ?>
+    </ul>
+  </nav>
     <div class="contact-container">
         <div id="validationBox" class="validation-box">
             <div id="message">

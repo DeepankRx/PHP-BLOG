@@ -31,13 +31,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $Password = $_POST["Password"];
   $credentialsMatching = "SELECT * FROM `users` WHERE `Username` = '$Username' AND `Password` = '$Password'";
   $result = mysqli_query($conn, $credentialsMatching);
+  if (!$result) {
+    console_log("Query Failed " . mysqli_error($conn) . "\n");
+  } else {
+    console_log("Query Successful\n");
+  }
   if (mysqli_num_rows($result) === 1) {
     session_start();
+    $row = mysqli_fetch_assoc($result);
+    console_log($row);
     $_SESSION["Username"] = $Username;
     $_SESSION["Password"] = $Password;
-    if(isset($_SESSION["Username"])
-    && isset($_SESSION["Password"])){
+    if(isset($_SESSION["Username"]) && $row['isAdmin']==="true"){
       header("Location: admin.php");
+    }
+    else{
+      header("Location: index.php");
     }
   } else {
     echo "<script>alert('Invalid Username Of Password')</script>";
@@ -61,14 +70,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  <nav id="navbar">
+<nav id="navbar">
     <h1><a class="title" href="index.php">Programming Hub</a></h1>
     <ul>
       <li><a class="nav-element" href="index.php">Home</a></li>
       <li><a class="nav-element" href="blog.php">Blog</a></li>
       <li><a class="nav-element" href="contact.php">Contact</a></li>
-      <li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
-      <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>
+      <?php 
+      if(!isset($_SESSION["Username"])){
+  echo   '<li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
+   <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>';
+      }
+      else
+      {
+        echo   '<li><a class="nav-element" href="logout.php"><button class="login-btn">Log Out</button></a></li>';
+        echo
+        '<li><a class="nav-element" href="profile.php"><button class="login-btn">'.$_SESSION['Username'].'</button></a></li>';
+      }
+      ?>
     </ul>
   </nav>
   <div class="contact-container">

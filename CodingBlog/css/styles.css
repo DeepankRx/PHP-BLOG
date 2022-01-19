@@ -308,11 +308,65 @@ label
 .login-btn{
     display: inline-block;
     margin: 0px;
-    width:80px; 
+    
     padding: 10px;
+
     background-color: #7868E6;
     color: #fff;
     border-radius: 10px;
     font-weight: bold;
     text-decoration: none;
+}
+
+
+
+.comment-section
+{
+    display: inline-block;
+    width: 100%;
+    margin: 45px;
+    text-align: left;
+    padding: 10px;
+}
+
+.hr
+{
+    border-top: 8px solid #EDEEF7;
+}
+
+.comment-input
+{
+    height: 40px;
+    width:300px;
+    border-radius: 10px;
+}
+
+.comment-name
+{
+    height: 40px;
+    width:300px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+.comment-date
+{
+    font-size: 15px;
+    color: #a1a1a1;
+    padding-left: 10px;
+    margin-left: 20px;
+    padding-top: 0;
+    margin-top: 0;
+    display: inline-block;
+}
+.comment-para
+{
+    font-size: 15px;
+    color: #000000;
+    padding-left: 10px;
+    margin-left: 20px;
+    padding-top: 0;
+    margin-top: 0;
+    display: inline-block;
+    text-transform: capitalize;
 }

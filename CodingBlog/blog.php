@@ -1,46 +1,24 @@
 <?php
+include "connection.php";
 
-//function for console log
-function console_log($output, $with_script_tags = true)
-{
-  $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
-    ');';
-  if ($with_script_tags) {
-    $js_code = '<script>' . $js_code . '</script>';
-  }
-  echo $js_code;
-}
+$CommentTable = "CREATE TABLE `comments` (`sno` INT(5) NOT NULL AUTO_INCREMENT, `date` DATE,`comment` VARCHAR(10000) NOT NULL,`Name` VARCHAR(250) NOT NULL, PRIMARY KEY (`sno`))";
 
-//connecting parameters
-$servername = "localhost:4306";
-$username = "root";
-$password = "";
-$database = "phub";
-
-
-//connecting to database
-$conn = mysqli_connect($servername, $username, $password, $database);
-if (!$conn) {
-  console_log("Connection failed " . mysqli_connect_error() . "\n");
-} else {
-  console_log("Connection Successful \n");
-}
-
-$myDatabase = "CREATE DATABASE phub";
-$dbResult = mysqli_query($conn, $myDatabase);
-if (!$dbResult) {
-  console_log("Database Creation Failed\n Or Database Exist Already\n");
-} else {
-  console_log("Database Creation Successful\n");
-}
-
-$myTable = "CREATE TABLE `blog` (`sno` INT(5) NOT NULL AUTO_INCREMENT, `date` DATE,`title` VARCHAR(10000) NOT NULL, `description` VARCHAR(1000000) NOT NULL , PRIMARY KEY (`sno`))";
-
-$resultOfTable  = mysqli_query($conn, $myTable);
+$resultOfTable  = mysqli_query($conn, $CommentTable);
 if (!$resultOfTable) {
   console_log("Table Creation Failed " . mysqli_error($conn) . "\n");
 } else {
   console_log("\nTable Creation Successful\n");
+}
+if(isset($_POST["comment"]))
+{
+  $comment = $_POST["comment"];
+ 
+  $sql = "INSERT INTO comments (date,comment,`Name`) VALUES (NOW(),'$comment','$_SESSION[Username]')";
+  $result = mysqli_query($conn,$sql);
+ if(!$result)
+  {
+    echo "<script>alert('Comment Not Added');</script>";
+  }
 }
 ?>
 
@@ -66,8 +44,18 @@ if (!$resultOfTable) {
       <li><a class="nav-element" href="index.php">Home</a></li>
       <li><a class="nav-element" href="blog.php">Blog</a></li>
       <li><a class="nav-element" href="contact.php">Contact</a></li>
-      <li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
-      <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>
+      <?php 
+      if(!isset($_SESSION["Username"])){
+  echo   '<li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
+   <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>';
+      }
+      else
+      {
+        echo   '<li><a class="nav-element" href="logout.php"><button class="login-btn">Log Out</button></a></li>';
+        echo
+        '<li><a class="nav-element" href="profile.php"><button class="login-btn">'.$_SESSION['Username'].'</button></a></li>';
+      }
+      ?>
     </ul>
   </nav>
 
@@ -93,6 +81,7 @@ if (!$resultOfTable) {
         </h4>
         <h2 class="blog-heading">' . $row["title"] . '</h2>
         <p class="blog-box-para">' . substr($row["description"], 0, 100) . '<span id="dots"></span ><span class="readMore" id="more' . $number . '">' . substr($row["description"], 100) . '</span></p>
+        
         <button class="read-more-btn" onclick="readMore(this.id)" id="myBtn' . $number . '">Read more</button>
         </div>';
           $number = $number + 1;
@@ -100,6 +89,42 @@ if (!$resultOfTable) {
       }
 
       ?>
+      <div class="comment-section">
+      <h1><b>Comments</b></h1>
+          <hr class="hr">
+        <?php
+        // session_start();
+        if(isset($_SESSION["Username"])){
+          echo '
+        <form action="blog.php" method="post">
+          <div class="input-div">
+            <input class="comment-input" type="text" name="comment" placeholder="Enter your comment here" required>
+            <input class="login-btn" type="submit" name="submit" value="Submit">
+          </div>
+      </form>';
+        }
+        ?>
+    <?php
+
+      $detail = "SELECT * FROM `comments`";
+      $result = mysqli_query($conn, $detail);
+      if (!$result) {
+        console_log(mysqli_error($conn));
+      }
+      $num = mysqli_num_rows($result);
+      if ($num > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+          echo '<div class="comment-box">
+
+          <h4 class="comment-name">Comment By: ' . $row["Name"] . '</h4>
+          <h4 class="comment-date">On Date : ' . $row['date'] . '</h4><br>
+          <p class="comment-para">Comment : ' . $row["comment"] . '</p>
+          <hr >
+          </div>';
+        }
+      } 
+      ?>
+      </div>
     </div>
   </div>
 

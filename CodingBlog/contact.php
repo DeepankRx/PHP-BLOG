@@ -1,30 +1,8 @@
 <?php
 
-//function for console log
-function console_log($output, $with_script_tags = true)
-{
-  $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
-    ');';
-  if ($with_script_tags) {
-    $js_code = '<script>' . $js_code . '</script>';
-  }
-  echo $js_code;
-}
+include "connection.php";
 
-$servername = "localhost:4306";
-$username = "root";
-$password = "";
-$database = "phub";
-
-//connecting to database
-$conn = mysqli_connect($servername, $username, $password, $database);
-if (!$conn) {
-  console_log("Connection failed " . mysqli_connect_error() . "\n");
-} else {
-  console_log("Connection Successful \n");
-}
-
-$myTable = "CREATE TABLE `messages` (`sno` INT(5) NOT NULL AUTO_INCREMENT, `date` DATE,`Name` VARCHAR(50) NOT NULL,`Email` VARCHAR(100) NOT NULL, `Message` VARCHAR(1000) NOT NULL,`PhoneNumber` INT(12) NOT NULL , PRIMARY KEY (`sno`))";
+$myTable = "CREATE TABLE `messages` (`sno` INT(5) NOT NULL AUTO_INCREMENT, `date` DATE,`Name` VARCHAR(50) NOT NULL,`Email` VARCHAR(100) NOT NULL, `Message` VARCHAR(1000) NOT NULL,`PhoneNumber` BIGINT NOT NULL , PRIMARY KEY (`sno`))";
 
 $resultOfTable  = mysqli_query($conn, $myTable);
 if (!$resultOfTable) {
@@ -37,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $Email = $_POST["Email"];
   $PhoneNumber = $_POST["PhoneNumber"];
   $Message = $_POST["Message"];
-  
+
   $insertingData = "INSERT INTO `messages` ( `date`,`Name`, `Email`,`PhoneNumber`, `Message` ) VALUES (SYSDATE(), '$Name','$Email','$PhoneNumber','$Message')";
   $insert = mysqli_query($conn, $insertingData);
   if (!$insert) {
@@ -70,8 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <li><a class="nav-element" href="index.php">Home</a></li>
       <li><a class="nav-element" href="blog.php">Blog</a></li>
       <li><a class="nav-element" href="contact.php">Contact</a></li>
-      <li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
-      <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>
+      <?php
+      if (!isset($_SESSION["Username"])) {
+        echo   '<li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
+   <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>';
+      } else {
+        echo   '<li><a class="nav-element" href="logout.php"><button class="login-btn">Log Out</button></a></li>';
+        echo
+        '<li><a class="nav-element" href="profile.php"><button class="login-btn">' . $_SESSION['Username'] . '</button></a></li>';
+      }
+      ?>
     </ul>
   </nav>
   <div class="contact-container">
@@ -89,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <label for="Email">Email :</label>
         </div>
         <div class="input-div">
-          <input class="text-input " type="text" name="Email" id="Email" required>
+          <input class="text-input" type="text" name="Email" id="Email" required>
         </div>
         <br>
         <div class="label-div">

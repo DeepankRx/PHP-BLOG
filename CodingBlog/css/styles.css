@@ -9,7 +9,6 @@ body {
 ul {
     display: inline;
     float: right;
-
 }
 
 li {
@@ -17,7 +16,7 @@ li {
     font-family: 'Source Sans Pro', sans-serif;
     /* padding: 10px; */
     font-size: 20px;
-    margin-right: 30px;
+    margin-right: 20px;
     font-weight: 700;
     color: rgb(53, 53, 53)0;
 }
@@ -305,4 +304,15 @@ label
 
 {
     font-size:20px;
+}
+.login-btn{
+    display: inline-block;
+    margin: 0px;
+    width:80px; 
+    padding: 10px;
+    background-color: #7868E6;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
 }

@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.contact-container {
+    width: 100%;
+    height: 950px;
+    display: inline-block;
+    position: relative;
+
+}
+
+.contact-form {
+    width: 50%;
+    height: auto;
+    position: relative;
+    margin: 150px auto 0 auto;
+    padding: 50px;
+    text-align: center;
+    background-color: #EDEEF7;
+    border-radius: 10px;
+
+}
+
+.label-div {
+    display: inline-block;
+    text-align: right;
+    width: 200px;
+    margin: 20px;
+}
+
+.input-div {
+    display: inline-block;
+    text-align: left;
+    width: 200px;
+}
+
+.text-input {
+    width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.message-box {
+    height: 200px;
+
+}
+
+.submit-div {
+    margin-top: 50px;
+}
+
+
+
+
+
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    left: -35px;
+    content: "✔";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    left: -35px;
+    content: "✖";
+}
+
+
+.validation-box
+{
+    width: 200px;
+    height: 200px;
+    margin-left:20px;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+    margin-top:200px;
+}

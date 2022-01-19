@@ -52,7 +52,7 @@ if (!$resultOfTable) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=<?php echo time(); ?>">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,12 +60,14 @@ if (!$resultOfTable) {
 </head>
 
 <body>
-  <nav id="navbar">
+<nav id="navbar">
     <h1><a class="title" href="index.php">Programming Hub</a></h1>
     <ul>
       <li><a class="nav-element" href="index.php">Home</a></li>
       <li><a class="nav-element" href="blog.php">Blog</a></li>
       <li><a class="nav-element" href="contact.php">Contact</a></li>
+      <li><a class="nav-element" href="login.php"><button class="login-btn">Login</button></a></li>
+      <li><a class="nav-element" href="signup.php"><button class="login-btn">Sign Up</button></a></li>
     </ul>
   </nav>
 
@@ -87,12 +89,12 @@ if (!$resultOfTable) {
         $number = 1;
         while ($row = mysqli_fetch_assoc($result)) {
           echo ' <div class="blog-box">
-        <h4 class="blog-date">Sun Dec 19 2021
-</h4>
-<h2 class="blog-heading">' . $row["title"] . '</h2>
-<p class="blog-box-para">' . substr($row["description"], 0, 100) . '<span id="dots"></span ><span class="readMore" id="more' . $number . '">' . substr($row["description"], 100) . '</span></p>
-<button class="read-more-btn" onclick="readMore(this.id)" id="myBtn' . $number . '">Read more</button>
-    </div>';
+        <h4 class="blog-date">' . $row['date'] . '</h4>
+        </h4>
+        <h2 class="blog-heading">' . $row["title"] . '</h2>
+        <p class="blog-box-para">' . substr($row["description"], 0, 100) . '<span id="dots"></span ><span class="readMore" id="more' . $number . '">' . substr($row["description"], 100) . '</span></p>
+        <button class="read-more-btn" onclick="readMore(this.id)" id="myBtn' . $number . '">Read more</button>
+        </div>';
           $number = $number + 1;
         }
       }
